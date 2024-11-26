@@ -49,37 +49,28 @@
                     </li>
                 @endif
 
-                @if(Auth::user()->permission('LISTE CONTRAT PERSONNEL') || Auth::user()->permission('DEMANDE PAIEMENT PERSONNEL') || Auth::user()->permission('HISTORIQUE PAIEMENT PERSONNEL'))
-                    <li class="nav-item">
-                        <a class="nav-link menu-link" href="#sidebarCompte" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarAuth"> 
-                            <i class="ri-account-circle-line"></i> <span data-key="t-authentication">Paiement</span>
-                        </a>
-                        <div class="collapse menu-dropdown" id="sidebarCompte">
-                            <ul class="nav nav-sm flex-column" >
-                                @if(Auth::user()->permission('LISTE CONTRAT PERSONNEL'))
-                                    <li class="nav-item">
-                                        <a href="{{route("liste_contrat")}}" class="nav-link" data-key="t-calendar"> Liste des contrats </a>
-                                    </li>
-                                @endif
-                            </ul>
-                            <ul class="nav nav-sm flex-column" >
-                                @if(Auth::user()->permission('DEMANDE PAIEMENT PERSONNEL'))
-                                    <li class="nav-item">
-                                        <a href="{{route("paiement.add",['ajouter'])}}" class="nav-link" data-key="t-calendar"> Demander un paiement </a>
-                                    </li>
-                                @endif
-                            </ul>
-                            <ul class="nav nav-sm flex-column" >
-                                @if(Auth::user()->permission('HISTORIQUE PAIEMENT PERSONNEL'))
-                                    <li class="nav-item">
-                                        <a href="{{route("paiement.index")}}" class="nav-link" data-key="t-calendar"> Historique des paiements </a>
-                                    </li>
-                                @endif
-                            </ul>
-                        </div>
-                    </li>
-                @endif
 
+                @if(Auth::user()->permission("LISTE PRODUIT") || Auth::user()->permission("AJOUTER PRODUIT"))
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="#sidebarProduct" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarProduct">
+                        <i class="ri-car-line"></i> <span data-key="t-authentication">Produits </span>
+                    </a>
+                    <div class="collapse menu-dropdown" id="sidebarProduct">
+                        <ul class="nav nav-sm flex-column" >
+                            @if(Auth::user()->permission("AJOUT PRODUIT"))
+                                <li class="nav-item">
+                                    <a href="{{route("product.add",['ajouter'])}}" class="nav-link" data-key="t-calendar"> Ajouter un produits </a>
+                                </li>
+                            @endif
+                            @if(Auth::user()->permission("LISTE PRODUIT"))
+                                <li class="nav-item">
+                                    <a href="{{route("product.index")}}" class="nav-link" data-key="t-calendar"> Liste des produits  </a>
+                                </li>
+                            @endif
+                        </ul>
+                    </div>
+                </li>
+                @endif
                 
                 
 
@@ -105,21 +96,23 @@
                     </li>
                 @endif
 
-                @if(Auth::user()->permission("LISTE PRODUIT") || Auth::user()->permission("AJOUTER PRODUIT"))
+               
+
+                @if(Auth::user()->permission("LISTE UTILISATEUR AGENCE") || Auth::user()->permission("AJOUTER UTILISATEUR AGENCE"))
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="#sidebarProduct" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarProduct">
-                        <i class="ri-car-line"></i> <span data-key="t-authentication">Produits </span>
+                    <a class="nav-link menu-link" href="#sidebarAgenceUser" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarProduct">
+                        <i class="ri-user-line"></i> <span data-key="t-authentication"> Utilisateur en agence </span>
                     </a>
-                    <div class="collapse menu-dropdown" id="sidebarProduct">
+                    <div class="collapse menu-dropdown" id="sidebarAgenceUser">
                         <ul class="nav nav-sm flex-column" >
-                            @if(Auth::user()->permission("AJOUT PRODUIT"))
+                            @if(Auth::user()->permission("AJOUTER UTILISATEUR AGENCE"))
                                 <li class="nav-item">
-                                    <a href="{{route("product.add",['ajouter'])}}" class="nav-link" data-key="t-calendar"> Ajouter un produits </a>
+                                    <a href="{{route("utilisateur_agence.add",['ajouter'])}}" class="nav-link" data-key="t-calendar"> Affectation  </a>
                                 </li>
                             @endif
-                            @if(Auth::user()->permission("LISTE PRODUIT"))
+                            @if(Auth::user()->permission("LISTE UTILISATEUR AGENCE"))
                                 <li class="nav-item">
-                                    <a href="{{route("product.index")}}" class="nav-link" data-key="t-calendar"> Liste des produits  </a>
+                                    <a href="{{route("utilisateur_agence.index")}}" class="nav-link" data-key="t-calendar"> Liste  </a>
                                 </li>
                             @endif
                         </ul>
@@ -127,44 +120,30 @@
                 </li>
                 @endif
 
-                @if(Auth::user()->permission("LISTE CONTRAT") || Auth::user()->permission("AJOUTER CONTRAT"))
-                    <li class="nav-item">
-                        <a class="nav-link menu-link" href="#sidebarContrat" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarContrat">
-                            <i class="ri-file-list-line"></i> <span data-key="t-authentication">Contrat</span>
-                        </a>
-                        <div class="collapse menu-dropdown" id="sidebarContrat">
-                            <ul class="nav nav-sm flex-column" >
-                                @if(Auth::user()->permission("LISTE CONTRAT"))
-                                    <li class="nav-item">
-                                        <a href="{{route("contrat.index")}}" class="nav-link" data-key="t-calendar"> Liste des contrats </a>
-                                    </li>
-                                @endif
-                                @if(Auth::user()->permission("AJOUT CONTRAT"))
-                                    <li class="nav-item">
-                                        <a href="{{route("contrat.add",['ajouter'])}}" class="nav-link" data-key="t-calendar">Créer un contrat  </a>
-                                    </li>
-                                @endif
-                            </ul>
-                        </div>
-                    </li>
-                @endif
+              
 
-                @if(Auth::user()->permission("LISTE PAIEMENT ADMIN"))
-                    <li class="nav-item">
-                        <a class="nav-link menu-link" href="#sidebarPaiementAdmin" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarCustomer">
-                            <i class="ri-user-line"></i> <span data-key="t-authentication">Gestion des Paiements </span>
-                        </a>
-                        <div class="collapse menu-dropdown" id="sidebarPaiementAdmin">
-                            <ul class="nav nav-sm flex-column" >
-                                @if(Auth::user()->permission("LISTE PAIEMENT ADMIN"))
-                                    <li class="nav-item">
-                                        <a href="{{route("gestion-paiement.index")}}"  class="nav-link" data-key="t-calendar"> Paiements en cours </a>
-                                    </li>
-                                @endif
-                            </ul>
-                        </div>
-                    </li>
+                @if(Auth::user()->permission("LISTE AGENCE") || Auth::user()->permission("AJOUTER AGENCE"))
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="#sidebarAgence" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarProduct">
+                        <i class="ri-home-line"></i> <span data-key="t-authentication"> Nos Agences </span>
+                    </a>
+                    <div class="collapse menu-dropdown" id="sidebarAgence">
+                        <ul class="nav nav-sm flex-column" >
+                            @if(Auth::user()->permission("AJOUTER AGENCE"))
+                                <li class="nav-item">
+                                    <a href="{{route("agence.add",['ajouter'])}}" class="nav-link" data-key="t-calendar"> Ajouter une agence </a>
+                                </li>
+                            @endif
+                            @if(Auth::user()->permission("LISTE AGENCE"))
+                                <li class="nav-item">
+                                    <a href="{{route("agence.index")}}" class="nav-link" data-key="t-calendar"> Liste des agences  </a>
+                                </li>
+                            @endif
+                        </ul>
+                    </div>
+                </li>
                 @endif
+                
 
                 @if(Auth::user()->permission('AJOUT UTILISATEUR') || Auth::user()->permission('LISTE UTILISATEUR') || Auth::user()->permission('LISTE ROLE') || Auth::user()->permission('LISTE PERMISSION'))
                     <li class="nav-item">
@@ -197,14 +176,6 @@
                         </div>
                     </li>
                 @endif
-
-                <li class="nav-item">
-                    <a class="nav-link menu-link" href="#">
-                        <i class="ri-dashboard-2-line"></i> <span data-key="t-dashboards">Informations</span>
-                    </a>
-                </li>
-
-
             </ul>
         </div>
         <!-- Sidebar -->

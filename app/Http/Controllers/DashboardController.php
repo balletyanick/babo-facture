@@ -3,7 +3,6 @@
 
     use Illuminate\Http\Request;
     use Illuminate\Support\Facades\Auth;
-    use App\Models\Contrat;
     use App\Models\Product;
     use App\Models\User;
     use App\Models\Customer;
@@ -21,10 +20,9 @@
 
 
             $nbUsers = User::count();
-            $nbContrat = Contrat::count();
             $nbProduct = Product::count();
             $nbCustomer = Customer::count();
-            return view('dashboard.index', compact('nbUsers','nbContrat','nbProduct','nbCustomer'));
+            return view('dashboard.index', compact('nbUsers','nbProduct','nbCustomer'));
         }
 
     }

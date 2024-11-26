@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
 class Product extends Model
 {
     use HasFactory;
-    public $incrementing = false;
+    public $incrementing = false; 
     protected $keyType = 'string';
 
     protected $guarded = [

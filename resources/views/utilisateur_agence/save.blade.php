@@ -17,7 +17,7 @@
 
                             <div class="page-title-right">
                                 <ol class="breadcrumb m-0">
-                                    <li class="breadcrumb-item"><a href="javascript: void(0);">Contrats</a></li>
+                                    <li class="breadcrumb-item"><a href="javascript: void(0);">Utilisateur en agence </a></li>
                                     <li class="breadcrumb-item active">{{$title}}</li>
                                 </ol>
                             </div>
@@ -26,29 +26,43 @@
                     </div>
                 </div>
 
-                <form action="{{route('contrat.save_add_montant')}}" class="add_montant">
+                <form action="{{route('utilisateur_agence.save')}}" class="add_utilisateur_agence">
                     @csrf
-                    <input type="hidden" name="id" value="{{$contrat->id}}">
+                    <input type="hidden" name="id" value="{{$agenceUser->id}}">
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="card">
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-md-12">
+                                            <h4><small>Client</small></h4>
+                                            <hr>
                                             <div class="row g-3">
-                                                <div class="col-lg-12"> 
-                                                    <div class="mt-3">
-                                                        <label class="form-label"> Montant disponible actuellement  </label>
-                                                        <input type="number" value={{ $contrat->dispo_retrait }}  class="form-control bg-light rounded-end" readonly/>
+                                                <div class="col-lg-6">
+
+                                                    <div>
+                                                        <label class="form-label"> Utilisateur </label>
+                                                        <select name="user_id" id="user_id" class="form-control select2">
+                                                                @foreach($user as $users)
+                                                                    <option value="{{$users->id}}" {{$users->id==$agenceUser->user_id ? 'selected' : ''}}>{{$users->first_name}} {{$users->last_name}}</option>
+                                                                @endforeach
+                                                        </select>
                                                     </div>
-                                                    <div class="mt-3">
-                                                        <label class="form-label"> Montant disponible pour retrait (Ajout)  </label>
-                                                        <input type="number" name="dispo_retrait"  class="form-control rounded-end" required/>
+                                                </div>
+                                                
+                                                <div class="col-lg-6">
+                                                    <div>
+                                                        <label class="form-label"> Agence </label>
+                                                        <select name="agence_id" id="agence_id" class="form-control select2">
+                                                                @foreach($agence as $agences)
+                                                                    <option value="{{$agences->id}}" {{$agences->id==$agenceUser->user_id ? 'selected' : ''}}>{{$agences->libelle}} </option>
+                                                                @endforeach
+                                                        </select>  
                                                     </div>
                                                 </div>
 
                                                 <div class="col-lg-12"> 
-                                                    <button id="add_montant" class="btn btn-primary btn-block" style="width:100%">Enregistrer</button> 
+                                                    <button id="add_utilisateur_agence" class="btn btn-primary btn-block" style="width:100%">Enregistrer</button> 
                                                 </div>
                                             </div>
                                         </div>
@@ -97,14 +111,14 @@
             $('.summernote').summernote({height: 600});
         });
 
-        $('.add_montant').submit(function(e){
+        $('.add_utilisateur_agence').submit(function(e){
 
             e.preventDefault();
 
             var form = new FormData($(this)[0]);
 
-            var buttonDefault = $('#add_montant').text();
-            var button = $('#add_montant');
+            var buttonDefault = $('#add_utilisateur_agence').text();
+            var button = $('#add_utilisateur_agence');
 
             button.attr('disabled',true);
             button.text('Veuillez patienter ...');
@@ -131,7 +145,7 @@
                             backgroundColor: "#4CAF50", // green
                         }).showToast();
 
-                        window.location='{{route("contrat.index")}}'
+                        window.location='{{route("utilisateur_agence.index")}}'
                     }else{
                         Toastify({
                             text: result.message,

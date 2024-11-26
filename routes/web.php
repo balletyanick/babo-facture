@@ -9,9 +9,10 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ContratController;
 use App\Http\Controllers\ProductController;
-use App\Http\Controllers\CompteController;
-use App\Http\Controllers\PaiementController;
-use App\Http\Controllers\GestionPaiementController;
+use App\Http\Controllers\AgenceController;
+use App\Http\Controllers\AgenceUserController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -31,24 +32,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/deconnexion', [AuthController::class, 'logout'])->name('logout');
 
+    #dashboard
     Route::get('/', [DashboardController::class, 'index']);
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-
-    #compte
-    Route::get('/compte', [CompteController::class, 'index'])->name('compte');
-    Route::get('/liste_contrat', [CompteController::class, 'liste_contrat'])->name('liste_contrat');
-
-
-    #paiement
-    Route::get('/historique-des-paiements', [PaiementController::class, 'index'])->name('paiement.index');
-    Route::get('/paiement/{id}', [PaiementController::class, 'add'])->name('paiement.add');
-    Route::post('/save-paiement', [PaiementController::class, 'save'])->name('paiement.save');
-
-    #gestion-paiement (admin)
-    Route::get('/liste-des-paiements', [GestionPaiementController::class, 'index'])->name('gestion-paiement.index');
-    Route::get('/paiement-refuser/{id}', [GestionPaiementController::class, 'refuser_paiement'])->name('paiement.refuser');
-    Route::get('/paiement-valider/{id}', [GestionPaiementController::class, 'valider_paiement'])->name('paiement.valider');
-
 
     #utilisateur
     Route::get('/liste-des-utilisateurs', [UserController::class, 'index'])->name('user.index');
@@ -56,12 +42,23 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/save-user', [UserController::class, 'save'])->name('user.save');
     Route::get('/delete-user', [UserController::class, 'delete'])->name('user.delete'); 
 
+    #agence
+    Route::get('/liste-agence', [AgenceController::class, 'index'])->name('agence.index');
+    Route::get('/agence/{id}', [AgenceController::class, 'add'])->name('agence.add');
+    Route::post('/save-agence', [AgenceController::class, 'save'])->name('agence.save');
+    Route::get('/delete-agence', [AgenceController::class, 'delete'])->name('agence.delete');
+
+    #utilisateur en agence 
+    Route::get('/liste-utilisateur-agence', [AgenceUserController::class, 'index'])->name('utilisateur_agence.index');
+    Route::get('/utilisateur-agence/{id}', [AgenceUserController::class, 'add'])->name('utilisateur_agence.add');
+    Route::post('/save-utilisateur-agence', [AgenceUserController::class, 'save'])->name('utilisateur_agence.save');
+    Route::get('/delete-utilisateur-agence', [AgenceUserController::class, 'delete'])->name('utilisateur_agence.delete');
+
     #client
     Route::get('/liste-clients', [CustomerController::class, 'index'])->name('customer.index');
     Route::get('/client/{id}', [CustomerController::class, 'add'])->name('customer.add');
     Route::post('/save-customer', [CustomerController::class, 'save'])->name('customer.save');
     Route::get('/delete-customer', [CustomerController::class, 'delete'])->name('customer.delete');
-
     Route::get('/edit-customer/{id}', [CustomerController::class, 'edit'])->name('customer.edit');
     
     #produit

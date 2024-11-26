@@ -41,22 +41,6 @@
                                                 <div class="col-lg-6">
 
                                                     <div>
-                                                        <label class="form-label"> Utilisateur </label>
-                                                        <select name="user_id" id="user_id" class="form-control select2">
-                                                                @foreach($user as $users)
-                                                                    <option value="{{$users->id}}" {{$users->id==$customer->user_id ? 'selected' : ''}}>{{$users->first_name}} {{$users->last_name}}</option>
-                                                                @endforeach
-                                                        </select>
-                                                    </div>
-        
-                                                    <div class="mt-3">
-                                                        <label class="form-label">Date de naissance</label>
-                                                        <input type="date" name="date_of_birth" value="{{$customer->date_of_birth }}" class="form-control rounded-end" required />
-                                                    </div>
-                                                </div>
-                                                
-                                                <div class="col-lg-6">
-                                                    <div>
                                                         <label class="form-label"> Genre</label>
                                                         <select name="genre" id="genre" class="form-control select2">
                                                             <option> Monsieur </option>
@@ -64,12 +48,42 @@
                                                             <option> Mademoiselle </option>
                                                         </select>
                                                     </div>
+        
+                                                    <div class="mt-3">
+                                                        <label class="form-label"> Nom </label>
+                                                        <input type="text" name="first_name" class="form-control rounded-end" required />
+                                                    </div>
+
+                                                    <div class="mt-3">
+                                                        <label class="form-label"> Prenoms </label>
+                                                        <input type="text" name="last_name" class="form-control rounded-end" required />
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="col-lg-6">
+                                                    
+                                                    <div>
+                                                        <label class="form-label">Date de naissance</label>
+                                                        <input type="date" name="date_of_birth" class="form-control rounded-end" required />
+                                                    </div>
 
                                                     <div  class="mt-3">
                                                         <label class="form-label">Numero CNI </label>
-                                                        <input type="text" name="numero_cni" value="{{$customer->numero_cni }}" class="form-control rounded-end" required/>
+                                                        <input type="text" name="numero_cni" class="form-control rounded-end" required/>
                                                     </div>
 
+                                                    <div  class="mt-3">
+                                                        <label class="form-label">Numero de téléphone </label>
+                                                        <input type="text" name="phone" class="form-control rounded-end"/>
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="col-lg-12"> 
+                                                    <div>
+                                                        <label class="form-label"> Note <small>(Facultatif)</small> </label>
+                                                        <input type="text" name="note" class="form-control rounded-end"/>
+                                                    </div>
                                                 </div>
 
                                                 <div class="col-lg-12"> 

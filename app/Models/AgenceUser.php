@@ -6,11 +6,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
-class Contrat extends Model
+class AgenceUser extends Model
 {
     use HasFactory;
     public $incrementing = false; 
     protected $keyType = 'string';
+    protected $table = 'agences_user'; // Spécifie ici le nom exact de la table
 
     protected $guarded = [
         'created_at',
@@ -26,15 +27,13 @@ class Contrat extends Model
         });
     }
 
-    public function customer()
+    public function agence()
     {
-        return $this->belongsTo(Customer::class, 'customer_id');
+        return $this->belongsTo(Agence::class, 'agence_id');
     }
 
-    public function product()
+    public function user()
     {
-        return $this->belongsTo(Product::class, 'product_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
-
 }
- 

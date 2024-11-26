@@ -38,8 +38,8 @@
                                             <th>Nom et prenoms</th>
                                             <th>Date de naissance</th>
                                             <th>Numero CNI</th>
-                                            <th> Email </th>
                                             <th>Téléphone</th>
+                                            <th>Note</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -47,11 +47,11 @@
                                         @foreach ($customers as $customer)
                                             <tr>
                                                 <td>{{$customer->genre}}</td>
-                                                <td>{{$customer->user->first_name}} {{$customer->user->last_name}}</td>
+                                                <td>{{$customer->first_name}} {{$customer->last_name}}</td>
                                                 <td>{{date('d/m/Y',strtotime($customer->date_of_birth))}}</td>
                                                 <td>{{$customer->numero_cni}}</td>
-                                                <td>{{$customer->user->email}}</td>
-                                                <td>{{$customer->user->phone}}</td>
+                                                <td>{{$customer->phone}}</td>
+                                                <td>{{$customer->note}}</td>
                                                 <td>
                                                     @if(Auth::user()->permission('EDITION CLIENT') || Auth::user()->permission('SUPPRESSION CLIENT'))
                                                         <button class="btn btn-soft-secondary btn-sm dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">

@@ -29,7 +29,6 @@
                 <form action="{{route('customer.save')}}" class="add_customer">
                     @csrf
                     <input type="hidden" name="id" value="{{$customer->id}}">
-                    <input type="hidden" name="user_id" value="{{$customer->user_id}}">
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="card">
@@ -42,18 +41,6 @@
                                                 <div class="col-lg-6">
 
                                                     <div>
-                                                        <label class="form-label"> Utilisateur </label>
-                                                        <input type="text" class="form-control bg-light" value="{{$customer->user->first_name}} {{$customer->user->last_name}}" readonly>
-                                                    </div>
-        
-                                                    <div class="mt-3">
-                                                        <label class="form-label">Date de naissance</label>
-                                                        <input type="date" name="date_of_birth" value="{{$customer->date_of_birth }}" class="form-control rounded-end" required />
-                                                    </div>
-                                                </div>
-                                                
-                                                <div class="col-lg-6">
-                                                    <div>
                                                         <label class="form-label"> Genre</label>
                                                         <select name="genre" id="genre" class="form-control select2">
                                                             <option> Monsieur </option>
@@ -61,12 +48,42 @@
                                                             <option> Mademoiselle </option>
                                                         </select>
                                                     </div>
+        
+                                                    <div class="mt-3">
+                                                        <label class="form-label"> Nom </label>
+                                                        <input type="text" name="first_name" value="{{ $customer->first_name }}" class="form-control rounded-end" required />
+                                                    </div>
+
+                                                    <div class="mt-3">
+                                                        <label class="form-label"> Prenoms </label>
+                                                        <input type="text" name="last_name" value="{{ $customer->last_name }}" class="form-control rounded-end" required />
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="col-lg-6">
+                                                    
+                                                    <div>
+                                                        <label class="form-label">Date de naissance</label>
+                                                        <input type="date" name="date_of_birth" value="{{ $customer->date_of_birth }}" class="form-control rounded-end" required />
+                                                    </div>
 
                                                     <div  class="mt-3">
                                                         <label class="form-label">Numero CNI </label>
-                                                        <input type="text" name="numero_cni" value="{{$customer->numero_cni }}" class="form-control rounded-end" required/>
+                                                        <input type="text" name="numero_cni" value="{{ $customer->numero_cni }}" class="form-control rounded-end" required/>
                                                     </div>
 
+                                                    <div  class="mt-3">
+                                                        <label class="form-label">Numero de téléphone </label>
+                                                        <input type="text" name="phone" value="{{ $customer->phone }}" class="form-control rounded-end"/>
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="col-lg-12"> 
+                                                    <div>
+                                                        <label class="form-label"> Note <small>(Facultatif)</small> </label>
+                                                        <input type="text" name="note" value="{{ $customer->note }}" class="form-control rounded-end"/>
+                                                    </div>
                                                 </div>
 
                                                 <div class="col-lg-12"> 

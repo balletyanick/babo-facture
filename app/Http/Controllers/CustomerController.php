@@ -4,8 +4,6 @@
 
     use Illuminate\Http\Request;
     use App\Models\Customer;
-    use App\Models\Contrat;
-    use App\Models\Insurance;
     use App\Models\Role;
     use App\Models\User;
     use Illuminate\Support\Facades\Auth;
@@ -16,8 +14,7 @@
         public function index()
         {
             Auth::user()->access("LISTE CLIENT");
-            $customers = Customer::with('user')
-            ->paginate(100);
+            $customers = Customer::paginate(100);
             return view('customer.index',compact('customers'));
         }
  
@@ -36,8 +33,7 @@
                 Auth::user()->access('AJOUT CLIENT');
             } 
             
-            $user = User::all();
-            return view('customer.save',compact('customer','title','user'));
+            return view('customer.save',compact('customer','title'));
         }
 
         public function save(Request $request)
@@ -45,18 +41,21 @@
             Auth::user()->access('AJOUT CLIENT');
 
             $validator = $request->validate([
-                'user_id' => 'required|string|exists:users,id',
+                'first_name' => 'required|string',
+                'last_name' => 'required|string',
                 'date_of_birth' => 'required|date',
                 'numero_cni' => 'required|string',
                 'genre' => 'required|string',
+                'phone' => 'required|string',
+                'note' => 'nullable|string',
             ]);
-
-            $utilisateur = Customer::where('user_id', $request->user_id)
-                                ->where('id', '!=', $request->id)
-                                ->first();
 
             $customer = Customer::where('numero_cni', $request->numero_cni)
                                 ->where('id', '!=', $request->id)
+                                ->first();
+
+            $utilisateur = Customer::where('phone', $request->phone)
+                                ->where('phone', '!=', $request->phone)
                                 ->first();
 
             if ($customer) {
@@ -65,7 +64,7 @@
             } 
             
             else if ($utilisateur) {
-                return response()->json(['message' => 'Utilisateur est déja lié à un client.', "status" => "error"]);
+                return response()->json(['message' => 'Le numero de téléphone est déja lié à un client.', "status" => "error"]);
 
             }
             else {
@@ -98,8 +97,7 @@
             $title = 'Modifier les informations du client';
     
             $customer = Customer::find($id);
-            $user = User::all();
-            return view('customer.edit', compact('title', 'customer', 'user'));
+            return view('customer.edit', compact('title', 'customer'));
         }
     
     
@@ -109,15 +107,18 @@
         Auth::user()->access('EDITION CLIENT');
     
         $validator = $request->validate([
-            'user_id' => 'required|string|exists:users,id',
+            'first_name' => 'required|string',
+            'last_name' => 'required|string',
             'date_of_birth' => 'required|date',
             'numero_cni' => 'required|string',
             'genre' => 'required|string',
+            'phone' => 'required|string',
+            'note' => 'nullable|string',
         ]);
     
         $customer = Customer::findOrFail($request->id);
     
-        $data = $request->only(['user_id','date_of_birth','numero_cni','genre']);
+        $data = $request->only(['first_name','last_name','date_of_birth','numero_cni','genre','phone','note']);
         
         $contrat->update($data);
     

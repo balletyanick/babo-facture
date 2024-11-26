@@ -15,16 +15,18 @@ return new class extends Migration
     {
         Schema::create('customers', function (Blueprint $table) { 
             $table->uuid('id')->primary();
-            $table->char('user_id', 36);
+            $table->string('first_name');
+            $table->string('last_name');
             $table->date('date_of_birth');
             $table->string('numero_cni');
             $table->string('genre');
+            $table->string('phone');
+            $table->string('note')->nullable();
             $table->timestamps();
-        });
 
-        Schema::table('customers', function (Blueprint $table) {
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-        });
+        }); 
+
+       
     }
 
     /**

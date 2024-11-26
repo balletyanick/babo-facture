@@ -76,9 +76,9 @@ class User extends Authenticatable
         }
     }
 
-    public function customer()
+    public function agences_user()
     {
-        return $this->hasOne(Customer::class);
+        return $this->hasMany(AgenceUser::class);
     }
 
 }

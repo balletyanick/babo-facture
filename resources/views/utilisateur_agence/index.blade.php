@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', "Liste des paiements")
+@section('title', "Liste des clients")
 
 @section('content')
 
@@ -13,12 +13,12 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                            <h4 class="mb-sm-0">Liste des paiements</h4>
+                            <h4 class="mb-sm-0">Liste des utilistaeur en agence</h4>
 
                             <div class="page-title-right">
                                 <ol class="breadcrumb m-0">
-                                    <li class="breadcrumb-item"><a href="javascript: void(0);">Contrat</a></li>
-                                    <li class="breadcrumb-item active">Liste des paiements</li>
+                                    <li class="breadcrumb-item"><a href="javascript: void(0);">Utilisateur en agence</a></li>
+                                    <li class="breadcrumb-item active">Liste des Utilisateur en agence</li>
                                 </ol>
                             </div>
 
@@ -34,44 +34,33 @@
                                 <table id="table" class="table table-bordered dt-responsive table-striped align-middle" style="width:100%">
                                     <thead>
                                         <tr>
-                                            <th>N° Contrat</th>
                                             <th>Nom et prenoms</th>
-                                            <th> Date de demande</th>
-                                            <th> Mode de paiement</th>
-                                            <th> Montant </th>
-                                            <th> Date de début </th>
-                                            <th> Date de fin </th>
-                                            <th> Status </th>
+                                            <th> Fonction </th>
+                                            <th> Agence </th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($paiements as $paiement)
+                                        @foreach ($agenceUser as $agenceUsers)
                                             <tr>
-                                                <td> {{ $paiement->contrat->num_contrat }} </td>
-                                                <td> {{ $paiement->customer->user->first_name }} {{ $paiement->customer->user->last_name }}</th>
-                                                <td>{{date('d/m/Y',strtotime($paiement->date_demande))}}</td>
-                                                <td> {{ $paiement->amount }} </td>
-                                                <td> {{ $paiement->mode_paiement }} </td>
-                                                <td>{{date('d/m/Y',strtotime($paiement->contrat->date_start))}}</td>
-                                                <td>{{date('d/m/Y',strtotime($paiement->contrat->date_end))}}</td>
+                                                <td>{{$agenceUsers->user->first_name}} {{$agenceUsers->user->last_name}}</td>
+                                                <td>{{$agenceUsers->user->fonction}}</td>
+                                                <td>{{$agenceUsers->agence->libelle}}</td>
                                                 <td>
-                                                    <span class="badge 
-                                                        @if ($paiement->status == 0) 
-                                                            bg-warning  <!-- Orange -->
-                                                        @elseif ($paiement->status == 1) 
-                                                            bg-success  <!-- Green -->
-                                                        @elseif ($paiement->status == 2) 
-                                                            bg-danger   <!-- Red -->
-                                                        @endif
-                                                    ">
-                                                        @if ($paiement->status == 0)
-                                                            En cours
-                                                        @elseif ($paiement->status == 1)
-                                                            Accepté
-                                                        @elseif ($paiement->status == 2)
-                                                            Refusé
-                                                        @endif
-                                                    </span>
+                                                    @if(Auth::user()->permission('SUPPRESSION UTILISATEUR AGENCE'))
+                                                        <button class="btn btn-soft-secondary btn-sm dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                            <i class="ri-more-fill align-middle"></i>
+                                                        </button>
+                                                        <ul class="dropdown-menu dropdown-menu-end">
+                                                            @if(Auth::user()->permission('SUPPRESSION UTILISATEUR AGENCE'))
+                                                                <li>
+                                                                    <a href="javascript:void(0);" onclick="deleted('{{$agenceUsers->id}}','{{route('utilisateur_agence.delete')}}')" class="dropdown-item remove-item-btn">
+                                                                        <i class="ri-delete-bin-fill align-bottom me-2 text-muted" ></i> Supprimer
+                                                                    </a>
+                                                                </li>
+                                                            @endif
+                                                        </ul>
+                                                    @endif
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -80,18 +69,18 @@
                             </div>
                             <div>
                                 <ul class="pagination pagination-separated justify-content-center mb-0">
-                                    @if ($paiements->onFirstPage())
+                                    @if ($agenceUser->onFirstPage())
                                         <li class="page-item disabled">
                                             <span class="page-link"><i class="mdi mdi-chevron-left"></i></span>
                                         </li>
                                     @else
                                         <li class="page-item">
-                                            <a href="{{ $paiements->previousPageUrl() }}" class="page-link" rel="prev"><i class="mdi mdi-chevron-left"></i></a>
+                                            <a href="{{ $agenceUser->previousPageUrl() }}" class="page-link" rel="prev"><i class="mdi mdi-chevron-left"></i></a>
                                         </li>
                                     @endif
                         
-                                    @foreach ($paiements->getUrlRange(1, $paiements->lastPage()) as $page => $url)
-                                        @if ($page == $paiements->currentPage())
+                                    @foreach ($agenceUser->getUrlRange(1, $agenceUser->lastPage()) as $page => $url)
+                                        @if ($page == $agenceUser->currentPage())
                                             <li class="page-item active">
                                                 <span class="page-link">{{ $page }}</span>
                                             </li>
@@ -102,9 +91,9 @@
                                         @endif
                                     @endforeach
                         
-                                    @if ($paiements->hasMorePages())
+                                    @if ($agenceUser->hasMorePages())
                                         <li class="page-item">
-                                            <a href="{{ $paiements->nextPageUrl() }}" class="page-link" rel="next"><i class="mdi mdi-chevron-right"></i></a>
+                                            <a href="{{ $agenceUser->nextPageUrl() }}" class="page-link" rel="next"><i class="mdi mdi-chevron-right"></i></a>
                                         </li>
                                     @else
                                         <li class="page-item disabled">
@@ -124,7 +113,7 @@
             
         </div>
         <!-- End Page-content -->
-    </div>
+
 
 @endsection
 

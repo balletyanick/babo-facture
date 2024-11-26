@@ -26,18 +26,10 @@ class Customer extends Model
         });
     }
 
-    public function user()
-    {
-        return $this->belongsTo(User::class, 'user_id');
-    }
-
     public function contrats()
     {
         return $this->hasMany(Contrat::class);
     }
 
-    public function paiements()
-    {
-        return $this->hasMany(Paiement::class);
-    }
+    
 }

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
 
-class Paiement extends Model
+class Agence extends Model
 {
     use HasFactory;
     public $incrementing = false; 
@@ -15,7 +15,7 @@ class Paiement extends Model
 
     protected $guarded = [
         'created_at',
-        'updated_at',
+        'updated_at', 
     ];
 
     protected static function boot()
@@ -27,16 +27,8 @@ class Paiement extends Model
         });
     }
 
-
-    public function customer()
+    public function agences_user()
     {
-        return $this->belongsTo(Customer::class, 'customer_id');
+        return $this->hasMany(AgenceUser::class);
     }
-
-    public function contrat()
-    {
-        return $this->belongsTo(Contrat::class, 'contrat_id');
-    }
-
 }
- 
